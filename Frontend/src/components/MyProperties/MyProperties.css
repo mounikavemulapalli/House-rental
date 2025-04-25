@@ -1,0 +1,145 @@
+/* MyProperties.css */
+.my-properties-page-container {
+    display: flex;
+    min-height: 100vh;
+
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;  /* Prevents horizontal scrolling */
+}
+
+/* Content container */
+.my-properties-page-content-container {
+    flex: 1;
+    padding: 30px;
+    max-width: 100%;
+    overflow-x: hidden; /* Prevents horizontal overflow */
+}
+
+/* Header buttons */
+.my-contacts-header-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.my-contacts-header-buttons button {
+    background-color: transparent;
+    color: #f5b642;
+    border: 2px solid #f5b642;
+    padding: 10px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    white-space: nowrap; /* Prevents text wrapping */
+}
+
+.my-contacts-header-buttons button:hover {
+    background-color: #f5b642;
+    color: #121212;
+}
+
+/* Properties section */
+.property-list {
+    padding: 20px;
+}
+
+.properties-heading {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Property card list */
+.property-card-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    list-style-type: none;
+    padding: 0;
+}
+
+/* No Properties message */
+.properties-page {
+    text-align: center;
+    padding: 20px;
+}
+
+.properties-page img {
+    max-width: 80%;
+    height: auto;
+}
+
+.properties-page h4 {
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+.properties-page p {
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+.myproperties-message-btn {
+    background-color: #f5b642;
+    color: #121212;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+    transition: 0.3s ease;
+}
+
+.send-message-btn:hover {
+    background-color: #d89f35;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .my-properties-page-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .my-properties-page-content-container {
+        padding: 20px;
+        width: 90%;
+    }
+
+    .my-contacts-header-buttons {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .property-card-list {
+        grid-template-columns: 1fr;
+    }
+
+    .properties-page img {
+        max-width: 60%;
+    }
+}
+
+@media (max-width: 480px) {
+    .my-properties-page-content-container {
+        padding: 15px;
+        width: 95%;
+    }
+
+    .my-contacts-header-buttons button {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+
+    .properties-page h4 {
+        font-size: 18px;
+    }
+
+    .properties-page p {
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,211 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+/* Header Styles */
+.header-nav-header {
+  background-color: var(--gold-dark);
+  color: #fff;
+  padding: 10px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-nav-content {
+
+ 
+  align-items: center;
+  max-width: 1200px;
+  margin:  auto;
+}
+
+/* Logo */
+.header-shopper-logo-name {
+  font-size: 24px;
+
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+  justify-content: left;
+ 
+
+  
+}
+
+/* Desktop Menu */
+.header-nav-bar-large-container {
+  display: flex;
+  justify-content: space-between;
+  margin-left: auto;
+  align-items: center;
+
+}
+.header-nav-menu{
+  display: flex;
+    list-style: none;
+    align-items: center;
+    padding: 8px;
+}
+
+
+.header-nav-menu-item {
+  margin: 0 15px;
+  
+}
+
+.header-nav-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+.header-nav-link:hover {
+  color: #ffbb33;
+  cursor: pointer;
+}
+
+.header-nav-menu-item-username {
+  margin: 10px 15px;
+  font-weight: bold;
+}
+
+.header-user-icon {
+  font-size: 24px;
+  color: #fff;
+  transition: color 0.3s ease;
+}
+
+.header-user-icon:hover {
+  color: #ffbb33;
+}
+
+.header-logout-desktop-btn {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.header-logout-desktop-btn:hover{
+  color: #ffbb33;
+}
+
+.nav-menu-item-username {
+  font-family: 'Roboto';
+  text-decoration: none;
+  margin: 10px 0px;
+  font-weight: 600;
+  font-size: 18px;
+  color: #d0b200;
+}
+
+/* Mobile Menu */
+.header-nav-bar-mobile-logo-container {
+  display: none;
+}
+
+.header-menu-toggle-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.header-nav-menu-mobile {
+  display: none;
+}
+
+.header-nav-menu-list-mobile {
+  list-style: none;
+  background-color: #34495e;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.header-nav-menu-list-mobile .header-nav-menu-item {
+  margin: 10px 0;
+}
+
+.header-logout-mobile-btn {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+.header-logout-mobile-btn:hover {
+  background-color: #c0392b;
+}
+
+/* Responsive Styles for Mobile View */
+@media screen and (max-width: 768px) {
+  .header-nav-bar-large-container {
+    display: none; /* Hide desktop menu on mobile */
+  }
+
+  .header-nav-bar-mobile-logo-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .header-menu-toggle-btn {
+    display: block; /* Show hamburger menu button */
+  }
+
+  .header-nav-menu-mobile {
+    display: block; /* Show mobile menu when toggled */
+    position: absolute;
+    top: 60px;
+
+
+    width: 50%;
+    align-items: center;
+    right: 25px; /* Position on the right side */
+ 
+    background-color: #2c3e50;
+    z-index: 1000;
+  }
+
+  .header-nav-menu-list-mobile {
+    padding: 20px;
+  }
+
+  .header-nav-menu-list-mobile .header-nav-menu-item {
+    margin: 15px 0;
+  }
+
+  .header-nav-link {
+    font-size: 18px; /* Larger font size for mobile */
+  }
+
+  .header-nav-menu-item-username {
+    margin: 0px 30px -37px 30px;
+    font-weight: bold;
+}
+  .header-logout-mobile-btn {
+    margin-top: 10px;
+  }
+}

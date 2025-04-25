@@ -1,0 +1,125 @@
+:root {
+  --light-orange: #ffbb33;   /* Lighter orange */
+  --light-gold: #ffd700;     /* Gold */
+  --light-brown: #9e7d55;    /* Lighter brown */
+  --light-gray: #f5f5f5;     /* Light gray for background */
+  --dark-gray: #333333;      /* Dark gray for text */
+  --white: #ffffff;          /* White for text and background */
+  --bright-orange:  #B8860B;  /* Bright orange for accents */
+  ---light-bg :  rgb(254, 243, 226);
+  --light-bgorabge: #f4f6f9;
+  --bth-color: #ad3531;
+  --gold: #D4AF37;
+--gold-dark: #B8860B;
+--gold-light: #F2D26C;
+--cream: #fdf5e6;
+--gray-dark: #d4c7aa;
+}
+
+
+.PropertyItem-property-item {
+  background-color: var(--cream);
+  border-radius: 10px;
+  overflow: hidden;
+  color: var(--bright-orange);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative; /* Needed for hover button positioning */
+  transition: transform 0.3s, filter 0.3s; /* Smooth hover effect */
+  
+  display: flex;
+  flex-direction: column; /* Stack the elements vertically */
+  justify-content: space-between; /* Distribute space evenly */
+  
+  height: 400px; /* Set a fixed height */
+  width: 100%; /* Set the width to 100% */
+  max-width: 350px; /* Set a max width for uniformity */
+}
+
+.PropertyItem-property-item:hover .PropertyItem-property-image-placeholder {
+  filter: blur(2px) brightness(0.6); /* Dim the card */
+  transform: scale(1.02); /* Slight zoom effect */
+}
+
+.PropertyItem-property-item:hover .PropertyItem-property-info {
+  filter: blur(2px) brightness(0.6); /* Dim the card */
+  transform: scale(1.02); /* Slight zoom effect */
+}
+
+.PropertyItem-property-image-placeholder img {
+  width: 100%; /* Responsive image */
+  height: 200px; /* Fixed height for images */
+  object-fit: cover; /* Maintain aspect ratio */
+}
+
+.PropertyItem-property-info {
+  padding: 15px;
+  text-align: left;
+  transition: opacity 0.3s; /* Smooth fade effect for content */
+}
+
+.PropertyItem-view-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Initially hidden */
+  background: none;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  opacity: 0; /* Hidden by default */
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.3s, filter 0.3s; /* Smooth button appearance */
+  z-index: 2;
+
+}
+
+.PropertyItem-property-item:hover .PropertyItem-view-btn {
+  opacity: 1;
+}
+
+.PropertyItem-property-info h3 {
+  font-size: 1.3rem;
+  margin-bottom: 5px;
+}
+
+.PropertyItem-property-info p {
+  font-size: 1.1rem;
+  margin: 5px 0;
+  color: black;
+}
+.PropertyItem-view-btn button {
+  background-color: var(--bright-orange);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 5px;
+  width: 100%;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s ease;
+  text-align: center;
+}
+
+.PropertyItem-view-btn button:hover {
+  background-color: var(--dark-orange);
+  transform: scale(1.05);
+}
+
+.PropertyItem-view-btn button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 165, 0, 0.5);
+}
+
+.PropertyItem-view-btn button {
+  background-color: var(--bright-orange);
+}
+
+.PropertyItem-view-btn button:hover {
+  background-color: var(--bth-color);
+}
+
+

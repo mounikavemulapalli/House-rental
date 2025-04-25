@@ -1,0 +1,47 @@
+/* MyShortlists.css */
+.my-shortlists-page-container {
+    display: flex;
+    min-height: 100vh;
+    padding: 10px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.my-shortlists-content {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    font-size: 26px;
+    font-weight: bold;
+    color: var(--gold); /* Gold */
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .my-shortlists-page-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 480px) {
+    .my-shortlists-content {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+}

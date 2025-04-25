@@ -1,0 +1,422 @@
+.view-details-page-property-img{
+
+    width: 300px;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f3e8; /* Light gold background */
+    color: #4a3d21; /* Dark brown text */
+}
+header {
+    background-color: #b8860b; /* Dark goldenrod */
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+}
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+}
+.property-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #e8c77c; /* Soft gold */
+    padding-bottom: 10px;
+}
+.property-header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+.price {
+    font-size: 20px;
+    color: #b8860b; /* Dark goldenrod */
+    font-weight: bold;
+}
+
+/* Custom Flex Layout for Images and Product Details */
+.property-layout {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.gallery {
+    flex: 1;
+    padding-top: 20px;
+    display: grid;
+    grid-template-columns: 400px 200px; /* 1 column for the large image and 1 column for the small images */
+    gap: 10px;
+    margin-right: 20px;
+}
+
+.gallery img {
+    width: 90%;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.gallery .image-count {
+    grid-column: span 2; /* Make the count span both columns */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px;
+    cursor: pointer;
+}
+/* Amenities and Contact Section */
+
+/* Amenities Section Styling */
+.amenities {
+margin-top: 20px;
+background-color: #faf4dc; /* Very light gold */
+padding: 15px;
+border-radius: 8px;
+border: 1px solid #e8c77c;
+}
+
+.amenities h2 {
+color: #b8860b;
+font-size: 20px;
+margin-bottom: 15px;
+}
+
+/* Amenities List Styling */
+.amenities-list {
+display: grid;
+grid-template-columns: 1fr 3fr;
+gap: 15px;
+}
+
+.amenity-item {
+display: flex;
+align-items: center;
+}
+
+.amenity-item i {
+font-size: 20px;
+color: #b8860b;
+margin-right: 10px;
+}
+
+.amenity-item span {
+font-size: 16px;
+color: #4a3d21;
+}
+
+/* Contact Information Styling */
+.contact {
+    background-color: #faf4dc; /* Light background */
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e8c77c; /* Light border color */
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+}
+
+/* Profile Picture and Contact Info */
+.contact-details {
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Profile Picture Styling */
+.profile-pic {
+    margin-right: 15px;
+}
+
+.profile-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%; /* Circular profile picture */
+    object-fit: cover;
+}
+
+/* Contact Info Styling */
+.contact-info h3 {
+    margin: 0;
+    font-size: 22px;
+    color: #b8860b; /* Dark goldenrod for the name */
+}
+
+.contact-info p {
+    margin: 5px 0;
+    color: #4a3d21; /* Dark brown text */
+}
+
+/* Contact Form Styling */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form input,
+form textarea {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+form button {
+    background-color: #b8860b;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Button Hover Effect */
+form button:hover {
+    background-color: #d4a40d;
+}
+
+.button:hover {
+    background-color: #d4a40d; /* Bright gold hover */
+}
+
+/* Slider Overlay */
+.slider-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.slider-overlay img {
+    max-width: 80%;
+    max-height: 80%;
+    border-radius: 8px;
+}
+.slider-overlay .close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #b8860b;
+    color: white;
+    padding: 10px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+.slider-overlay .navigation {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+.slider-overlay .navigation button {
+    background-color: rgba(255, 215, 0, 0.8);
+    border: none;
+    color: white;
+    font-size: 18px;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* Image container for Bedroom */
+.image-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Overlay on Bedroom Image */
+.image-container .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+/* Product Details Section */
+.details {
+    flex: 2;
+    margin-top: 20px;
+}
+
+.details h2 {
+    color: #b8860b;
+    font-size: 20px;
+}
+
+.details p {
+    line-height: 1.6;
+}
+
+/* Property Details Table Section */
+.property-details {
+    margin-top: 20px;
+}
+
+.property-details table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.property-details th, .property-details td {
+    padding: 10px;
+    text-align: left;
+    font-size: 16px;
+}
+
+.property-details th {
+    width: 40%;
+    background-color: #f8f3e8;
+}
+
+.property-details td {
+    background-color: #faf4dc;
+    border: 1px solid #e8c77c;
+}
+
+.property-details td i {
+    margin-right: 10px;
+    font-size: 18px;
+    color: #b8860b;
+}
+
+/* Button */
+.button {
+    display: inline-block;
+    background-color: #b8860b;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.button:hover {
+    background-color: #d4a40d; /* Bright gold hover */
+}
+
+/* Action Buttons Section */
+.action-buttons {
+display: flex;
+gap: 15px;
+margin-top: 20px;
+}
+
+/* Styling for buttons */
+.button {
+background-color: #b8860b;
+color: white;
+border: none;
+padding: 12px 20px;
+border-radius: 8px;
+font-size: 16px;
+display: flex;
+align-items: center;
+cursor: pointer;
+transition: background-color 0.3s ease;
+}
+
+/* Button Hover Effects */
+.button:hover {
+background-color: #d4a40d;
+}
+
+/* Icon Style inside Button */
+.button i {
+margin-right: 8px;
+}
+
+/* Tooltip Text */
+.tooltip-text {
+display: none;
+position: absolute;
+top: -30px;
+left: 50%;
+transform: translateX(-50%);
+background-color: #333;
+color: #fff;
+padding: 5px;
+border-radius: 4px;
+font-size: 14px;
+white-space: nowrap;
+}
+
+.button:hover .tooltip-text {
+display: block;
+}
+
+/* Button Specific Styles */
+.schedule-visit-btn {
+position: relative;
+}
+
+.message-owner-btn {
+position: relative;
+}
+
+/* Overview Section Styling */
+.overview {
+margin-top: 20px;
+background-color: #faf4dc; /* Light gold */
+padding: 15px;
+border-radius: 8px;
+border: 1px solid #e8c77c;
+}
+
+.overview h2 {
+color: #b8860b;
+font-size: 20px;
+margin-bottom: 15px;
+}
+
+/* Overview Item Styling */
+.overview-details {
+display: grid;
+grid-template-columns: 1fr 3fr;
+gap: 15px;
+}
+
+.overview-item {
+display: flex;
+align-items: center;
+}
+
+.overview-item i {
+font-size: 20px;
+color: #b8860b;
+margin-right: 10px;
+}
+
+.overview-item span {
+font-size: 16px;
+color: #4a3d21;
+}

@@ -1,0 +1,76 @@
+/** @format */
+
+.property-image {
+  width: 100%; /* Make the image take the full width of its container */
+  height: auto; /* Maintain aspect ratio */
+  object-fit: cover; /* Ensures the image fits within the dimensions */
+  border-radius: 10px; /* Adds rounded corners */
+  margin-bottom: 15px; /* Adds spacing below the image */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Adds a subtle shadow */
+}
+
+.chat-request-container {
+  display: flex;
+  flex-wrap: wrap; /* Allows items to wrap to the next row */
+  gap: 20px; /* Adds spacing between items */
+  justify-content: center; /* Centers items in the container */
+  padding: 20px; /* Adds padding around the container */
+  background-color: #f5f5f5; /* Light background color for the container */
+}
+
+.chat-request-item,
+.sent-chat-request-item {
+  display: flex;
+  flex-direction: column; /* Stack image and text vertically */
+  align-items: center; /* Center-align items */
+  padding: 19px;
+  border: 1px solid #ccc; /* Adds a subtle border */
+  border-radius: 12px; /* Rounds the corners */
+  background-color: #ffffff; /* White background for each item */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+  width: calc(50% - 20px); /* Ensures three items fit in one row with spacing */
+  box-sizing: border-box; /* Includes padding and border in width calculation */
+}
+
+.chat-request-item:hover,
+.sent-chat-request-item:hover {
+  transform: translateY(-5px); /* Slight lift on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+.chat-request-item div,
+.sent-chat-request-item div {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center-align text */
+  text-align: center; /* Center-align text */
+}
+
+.chat-request-item h4,
+.sent-chat-request-item h4 {
+  margin: 10px 0 5px 0;
+  font-size: 18px; /* Slightly larger font size */
+  font-weight: bold;
+  color: #333; /* Darker text color */
+}
+
+.chat-request-item p,
+.sent-chat-request-item p {
+  margin: 0;
+  font-size: 14px;
+  color: #666; /* Subtle text color */
+}
+
+.cancel-button {
+  background-color: #ff4d4f; /* Red background */
+  color: white; /* White text */
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cancel-button:hover {
+  background-color: #d9363e; /* Darker red on hover */
+}

@@ -1,0 +1,112 @@
+/* MyContacts.css */
+.my-contacts-page-container {
+    display: flex;
+    min-height: 100vh;
+
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;  /* Prevent horizontal scrolling */
+}
+
+/* Content container */
+.my-contacts-page-content-container {
+    flex: 1;
+    padding: 30px;
+    max-width: 100%;
+    overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
+/* Header buttons */
+.my-contacts-header-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.my-contacts-header-buttons button {
+    background-color: transparent;
+    color: var(--gold);
+    border: 2px solid var(--gold);
+    padding: 10px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    white-space: nowrap; /* Prevents text wrapping */
+}
+
+.my-contacts-header-buttons button:hover {
+    background-color: var(--gold);
+    color: #121212;
+}
+
+/* Title */
+.my-contacts-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+/* Toggle switch */
+.form-switch .form-check-input {
+    background-color: #555;
+    border-color: var(--gold);
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.form-switch .form-check-input:checked {
+    background-color: var(--gold);
+}
+
+/* Requests list */
+.requests-list {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    padding: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .my-contacts-page-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .my-contacts-page-content-container {
+        padding: 20px;
+        width: 90%;
+    }
+
+    .my-contacts-header-buttons {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .my-contacts-title {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .my-contacts-page-content-container {
+        padding: 15px;
+        width: 95%;
+    }
+
+    .my-contacts-header-buttons button {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+
+    .my-contacts-title h3 {
+        font-size: 18px;
+    }
+}
