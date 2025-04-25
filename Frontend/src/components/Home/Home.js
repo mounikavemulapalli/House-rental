@@ -139,8 +139,8 @@ const Home = () => {
               id='rent'
               name='search_type'
               value='rent'
-              checked={searchType === "rent"}
-              onChange={(e) => setSearchType(e.target.value)}
+              checked={searchType === "rent"} // Has checked
+              onChange={(e) => setSearchType(e.target.value)} // AND onChange
             />
             <label
               className={`btn ${searchType === "rent" ? "active" : ""}`}
@@ -154,8 +154,8 @@ const Home = () => {
               id='buy'
               name='search_type'
               value='Sale'
-              checked={searchType === "Sale"}
-              onChange={(e) => setSearchType(e.target.value)}
+              checked={searchType === "Sale"} // Has checked
+              onChange={(e) => setSearchType(e.target.value)} // AND onChange
             />
             <label
               className={`btn ${searchType === "Sale" ? "active" : ""}`}
@@ -169,8 +169,8 @@ const Home = () => {
               id='commercial'
               name='search_type'
               value='Commercial'
-              checked={searchType === "Commercial"}
-              onChange={(e) => setSearchType(e.target.value)}
+              checked={searchType === "Commercial"} // Has checked
+              onChange={(e) => setSearchType(e.target.value)} // AND onChange
             />
             <label
               className={`btn ${searchType === "Commercial" ? "active" : ""}`}

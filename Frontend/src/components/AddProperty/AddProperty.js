@@ -274,8 +274,7 @@ const AddPropertyPage = () => {
             />
           </div>
           <div className='form-group'>
-            // Ensure input names match state keys and have value prop
-            // Example for pinCode:
+            
             <div className='form-group'>
               <label>Pin Code</label>
               <input

@@ -1,4 +1,3 @@
-/** @format */
 
 import "./MyProperties.css";
 import ProfileSidebar from "../ProfileSidebar/ProfileSidebar";
@@ -10,19 +9,18 @@ import image from "../../assets/images/no-properties.svg";
 
 const MyProperties = () => {
   const [propertiesArray, setPropertiesArray] = useState([]);
-
   useEffect(() => {
     const getProperties = async () => {
       const token = Cookies.get("jwt_token");
-      console.log(`Token from cookie: ${token}`); // Add this line to check if the token exists
+      console.log(`Token from cookie: ${token}`); 
 
       if (!token) {
         console.error("No JWT token found in cookies.");
-        // Handle missing token case, maybe redirect to login
+       
         return;
       }
 
-      console.log(`Authorization Header being sent: Bearer ${token}`); // Check the format
+      console.log(`Authorization Header being sent: Bearer ${token}`); 
 
       const url = "http://localhost:4000/properties/owner";
       const headers = {
@@ -30,17 +28,16 @@ const MyProperties = () => {
         Authorization: `Bearer ${token}`,
       };
 
-      try { // Add try...catch block for better error handling
+      try { 
         const response = await axios.get(url, { headers });
         console.log(response.data);
         setPropertiesArray(response.data);
       } catch (error) {
         console.error("Error fetching properties:", error.response ? error.response.data : error.message);
-        // Handle the error, e.g., show a message to the user
-        if (error.response && (error.response.status === 401 || error.response.status === 403)) {
-           // Maybe redirect to login if unauthorized/forbidden
+        if (error.response && (error.response.status === 401 || error.response.status === 403))
+           {
            console.log("Redirecting to login due to auth error.");
-           // Add history.push('/login') if using react-router props
+           
         }
       }
     };

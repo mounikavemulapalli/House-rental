@@ -6,15 +6,56 @@ const authenticateToken = require("../middlewares/authenticateToken");
 
 const router = express.Router();
 
-router.get("/properties", async (req, res) => { // <<< Still commented out
+// Route to get all properties (public)
+router.get("/properties", async (req, res) => {
   const db = req.app.locals.db;
   try {
-    const properties = await db.all(`SELECT * FROM properties`);
-    res.status(201).json(properties); // Should be 200 for successful GET
+    // It's better to select specific columns than using *
+    const properties = await db.all(`
+      SELECT
+        propertyId, propertyTitle, price, propertyType, description,
+        address, street, city, state, pinCode,
+        mapLatitude, mapLongitude, ownerId, wallpaperImage
+      FROM properties
+    `);
+    // Use 200 OK for successful GET requests
+    res.status(200).json(properties);
   } catch (err) {
+    console.error("Error fetching all properties:", err); // Log error
     res.status(500).json({ errorMsg: "Internal Server Error" });
   }
 });
+
+// Route to get properties by the logged-in owner
+router.get("/properties/owner", authenticateToken, async (req, res) => {
+  const db = req.app.locals.db;
+  const { userId } = req.payload; // Get userId from authenticated token payload
+
+  if (!userId) {
+    // This shouldn't happen if authenticateToken works, but good practice
+    return res.status(401).json({ errorMsg: "User ID not found in token." });
+  }
+
+  try {
+    // Select properties where ownerId matches the userId from the token
+    const properties = await db.all(
+      `SELECT
+         propertyId, propertyTitle, price, propertyType, description,
+         address, street, city, state, pinCode,
+         mapLatitude, mapLongitude, ownerId, wallpaperImage
+       FROM properties
+       WHERE ownerId = ?`,
+      [userId]
+    );
+    res.status(200).json(properties); // Send the owner's properties
+  } catch (err) {
+    console.error("Error fetching owner properties:", err); // Log error
+    res.status(500).json({ errorMsg: "Internal Server Error" });
+  }
+});
+
+
+// Route to add a new property (requires authentication)
 router.post(
   "/add-properties",
   authenticateToken,
@@ -39,7 +80,7 @@ router.post(
 
     // Destructure userId from the token payload
     const { userId } = req.payload;
-    
+
     // Get the image path from multer (if any)
     const imagePath = req.file ? req.file.path : null;
 
@@ -63,10 +104,10 @@ router.post(
       city,
       state,
       pinCode,
-      latitude,
-      longitude,
+      latitude, // Ensure these match DB column names (mapLatitude, mapLongitude)
+      longitude, // Ensure these match DB column names (mapLatitude, mapLongitude)
       userId,
-      imagePath,
+      imagePath, // Ensure this matches DB column name (wallpaperImage)
     ];
 
     // Log the parameters for debugging
@@ -74,6 +115,7 @@ router.post(
 
     try {
       // Insert into DB, including image path if available
+      // Make sure column names here exactly match your DB schema
       await db.run(
         `INSERT INTO properties (
           propertyId,

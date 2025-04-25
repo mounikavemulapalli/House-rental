@@ -107,8 +107,8 @@ class LoginForm extends Component {
             className='password-checkbox'
             type='checkbox'
             id='showPassword'
-            checked={showPassword}
-            onChange={this.toggleShowPassword}
+            checked={showPassword} // Correctly uses checked
+            onChange={this.toggleShowPassword} // Correctly uses onChange
           />
           Show Password
         </div>
