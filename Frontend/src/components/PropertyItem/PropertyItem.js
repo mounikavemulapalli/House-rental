@@ -104,10 +104,10 @@ import image from "../../assets/images/no-properties.svg";
 
 const PropertyCard = (props) => {
   const { propertyDetails, currentUserId } = props;
-  const { propertyId, propertyTitle, price, description, city, state, imgUrl, ownerId } = propertyDetails;
+  const { propertyId, propertyTitle, price, description, city, state, wallpaperImage, ownerId } = propertyDetails;
   
   // Define imageUrl correctly
-  const imageUrl = imgUrl ? `http://localhost:4000/uploads/${imgUrl}` : image;
+  const imageUrl = wallpaperImage ? `http://localhost:4000/${wallpaperImage}` : image;
   const jwtToken = Cookies.get("jwt_token");
 
   const sendChatRequest = async () => {
