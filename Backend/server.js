@@ -1,12 +1,12 @@
 /** @format */
-
+const fs = require('fs');
 const express = require("express");
 const http = require("http");
 const cors = require("cors");
 const { Server } = require("socket.io");
 const connectDB = require("./config/db");
 const { setupSocket } = require("./sockets/socketHandler");
-
+const path = require("path");
 const authRoutes = require("./routes/auth");
 const propertiesRoutes = require("./routes/properties");
 const chatRoutes = require("./routes/chat");
@@ -21,7 +21,11 @@ const io = new Server(server, {
 });
 
 setupSocket(io);
-
+// Middleware to attach io to req
+app.use((req, res, next) => {
+  req.io = io;
+  next();
+});
 app.use(express.json());
 app.use(
   cors({
@@ -46,7 +50,7 @@ const startServer = async () => {
   app.use("/", chatRoutes);
 
   // Serve images from the 'uploads' directory
-  app.use("/uploads", express.static("uploads"));
+  app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
   // Start the server using the http server instance
   server.listen(PORT, () => console.log(`Server running on port ${PORT}`));

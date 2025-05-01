@@ -31,6 +31,12 @@ const ChatRequests = () => {
     );
   };
 
+  const handleDeleteRequest = (chatId) => {
+    setReceivedRequestsArray((prevRequests) =>
+      prevRequests.filter((request) => request.chatId !== chatId)
+    );
+  };
+
   useEffect(() => {
     const getReceivedChatRequests = async () => {
       const token = Cookies.get("jwt_token");
@@ -101,7 +107,7 @@ const ChatRequests = () => {
     <div className='chat-page-container'>
       <div
         className='requests-section'
-        style={{ width: { widthOfChatRequestsView } }}
+        style={{ width: widthOfChatRequestsView }}
       >
         <h2>Received Chat Requests</h2>
         <div className='requests-list'>
@@ -115,6 +121,7 @@ const ChatRequests = () => {
                 key={request.chatId}
                 showChatView={showChatView}
                 chatRequestItemDetails={request}
+                onDeleteRequest={handleDeleteRequest} // Pass the delete handler
               />
             ))
           )}

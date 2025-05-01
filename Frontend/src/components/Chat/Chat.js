@@ -43,6 +43,12 @@ const Chat = (props) => {
       transports: ["websocket", "polling"],
     });
 
+    socket.on("chatAccepted", ({ chatId }) => {
+      if (chatId === currentChatDetails.chatId) {
+        setIsChatOpen(true); // Show chat button
+      }
+    });
+
     socket.on("connect", () => {
       console.log("Socket.IO connected");
     });
@@ -61,7 +67,7 @@ const Chat = (props) => {
     return () => {
       socket.disconnect();
     };
-  }, [chatId, isChatOpen]);
+  }, [chatId, isChatOpen, currentChatDetails.chatId]);
 
   const handleSendMessage = async () => {
     if (messageContent.trim() !== "") {

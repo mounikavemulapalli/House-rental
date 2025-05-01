@@ -1,5 +1,3 @@
-/** @format */
-
 import React, { useState, useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
 import Header from "../Header/Header";
@@ -9,69 +7,54 @@ import axios from "axios";
 import { io } from "socket.io-client";
 import "./Home.css";
 import Navbar from "../Navbar/Navbar.js";
+const socket = io("http://localhost:4000", {
+  path: "/socket.io", // Same WebSocket path as server
+  transports: ["websocket", "polling"], // Include polling
+});
+
+socket.on("connect", () => {
+  console.log("Socket.IO connected");
+});
+
+socket.on("connect_error", (err) => {
+  console.error("Socket.IO connection error:", err);
+});
 
 const Home = () => {
   const [propertiesArray, setPropertiesArray] = useState([]);
   const [currentLocation, setCurrentLocation] = useState("Fetching...");
   const [searchType, setSearchType] = useState("rent");
   const [searchQuery, setSearchQuery] = useState("");
+  const [uploadedImage, setUploadedImage] = useState(null); // New state for uploaded image
 
   const token = Cookies.get("jwt_token");
 
   useEffect(() => {
     const getProperties = async () => {
-      try { // Add try block
+      try {
         const token = Cookies.get("jwt_token");
         const url = "http://localhost:4000/properties"; // Or "/properties" if using proxy
 
         const headers = {
           "Content-Type": "application/json",
-          // Authorization: `Bearer ${token}`, // This route doesn't need auth, can be removed for testing
         };
 
-        // Remove headers if testing without auth:
-        // const response = await axios.get(url);
         const response = await axios.get(url, { headers });
-
-        console.log("Properties fetched:", response.data); // Log success
         setPropertiesArray(response.data);
 
-      } catch (error) { // Add catch block
-        console.error("Error fetching properties:", error); // Log the full error
-        if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
-          console.error("Error response data:", error.response.data);
-          console.error("Error response status:", error.response.status);
-          console.error("Error response headers:", error.response.headers);
-        } else if (error.request) {
-          // The request was made but no response was received
-          console.error("Error request:", error.request);
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.error("Error message:", error.message);
+        // Assuming the response includes the image path
+        if (response.data.uploadedImagePath) {
+          setUploadedImage(response.data.uploadedImagePath);
         }
-        // Optionally set state to show an error message to the user
-        // setPropertiesArray([]); // Clear properties on error
+      } catch (error) {
+        console.error("Error fetching properties:", error);
       }
     };
 
     getProperties();
 
-    // WebSocket connection
-    const socket = io("http://localhost:4000", {
-      path: "/socket.io", // Same WebSocket path as server
-      transports: ["websocket", "polling"], // Include polling
-    });
-
-    socket.on("connect", () => {
-      console.log("Socket.IO connected");
-    });
-
-    socket.on("connect_error", (err) => {
-      console.error("Socket.IO connection error:", err);
-    });
-
+   
+    
     // Listen for new property events
     socket.on("newProperty", (newProperty) => {
       setPropertiesArray((prevProperties) => [...prevProperties, newProperty]);
@@ -84,7 +67,7 @@ const Home = () => {
   }, []);
 
   // Get Current Location
-  useEffect(() => {
+  const handleGetLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -111,27 +94,18 @@ const Home = () => {
     } else {
       setCurrentLocation("Geolocation is not supported by this browser.");
     }
-  }, []);
+  };
 
   return (
     <>
       {token === undefined ? <Navbar /> : <Header />}
-      <div
-        className='title-container'
-        style={{
-          backgroundImage: `url('/assets/images/hometitlemenubg.svg')`,
-        }}
-      >
+      <div className='title-container'>
         <p className='first-title'>
-          Your Dream{" "}
-          <span style={{ color: "#800500", fontWeight: "bold" }}>
-            Home Awaits
-          </span>{" "}
-          Here For You
+          Your Dream <span style={{ color: "#800500", fontWeight: "bold" }}>Home Awaits</span> Here For You
           <br />
           <span className='tagline'>Gruhalābhaṁ Bhavatu Śubhaṁ</span>
         </p>
-
+        {uploadedImage && <img src={uploadedImage} alt="Uploaded" />} {/* Display the uploaded image */}
         <div className='search-container'>
           <div className='row-buttons'>
             <input

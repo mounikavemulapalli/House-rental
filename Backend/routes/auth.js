@@ -1,6 +1,4 @@
-/** @format */
 
-// routes/auth.js
 const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -80,6 +78,22 @@ router.get("/user-profile", authenticateToken, async (req, res) => {
     res.status(201).json(user);
   } catch (err) {
     res.status(500).json({ errorMsg: "Database error" });
+  }
+});
+
+router.put("/update-profile", authenticateToken, async (req, res) => {
+  const db = req.app.locals.db;
+  const { userId } = req.payload;
+  const { username, email, phoneNumber } = req.body;
+
+  try {
+    await db.run(
+      `UPDATE users SET username = ?, email = ?, phoneNumber = ? WHERE userId = ?`,
+      [username, email, phoneNumber, userId]
+    );
+    res.status(200).send("Profile updated successfully");
+  } catch (err) {
+    res.status(500).json({ errorMsg: "Error updating profile", details: err.message });
   }
 });
 

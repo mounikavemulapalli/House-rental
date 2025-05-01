@@ -3,14 +3,12 @@ const upload = multer({ dest: "uploads/" });
 const express = require("express");
 const uuidv4 = require("../utils/uuid");
 const authenticateToken = require("../middlewares/authenticateToken");
-
 const router = express.Router();
 
 // Route to get all properties (public)
 router.get("/properties", async (req, res) => {
   const db = req.app.locals.db;
   try {
-    // It's better to select specific columns than using *
     const properties = await db.all(`
       SELECT
         propertyId, propertyTitle, price, propertyType, description,
@@ -18,10 +16,9 @@ router.get("/properties", async (req, res) => {
         mapLatitude, mapLongitude, ownerId, wallpaperImage
       FROM properties
     `);
-    // Use 200 OK for successful GET requests
     res.status(200).json(properties);
   } catch (err) {
-    console.error("Error fetching all properties:", err); // Log error
+    console.error("Error fetching all properties:", err);
     res.status(500).json({ errorMsg: "Internal Server Error" });
   }
 });
@@ -29,15 +26,13 @@ router.get("/properties", async (req, res) => {
 // Route to get properties by the logged-in owner
 router.get("/properties/owner", authenticateToken, async (req, res) => {
   const db = req.app.locals.db;
-  const { userId } = req.payload; // Get userId from authenticated token payload
+  const { userId } = req.payload;
 
   if (!userId) {
-    // This shouldn't happen if authenticateToken works, but good practice
     return res.status(401).json({ errorMsg: "User ID not found in token." });
   }
 
   try {
-    // Select properties where ownerId matches the userId from the token
     const properties = await db.all(
       `SELECT
          propertyId, propertyTitle, price, propertyType, description,
@@ -47,23 +42,22 @@ router.get("/properties/owner", authenticateToken, async (req, res) => {
        WHERE ownerId = ?`,
       [userId]
     );
-    res.status(200).json(properties); // Send the owner's properties
+    res.status(200).json(properties);
   } catch (err) {
-    console.error("Error fetching owner properties:", err); // Log error
+    console.error("Error fetching owner properties:", err);
     res.status(500).json({ errorMsg: "Internal Server Error" });
   }
 });
-
 
 // Route to add a new property (requires authentication)
 router.post(
   "/add-properties",
   authenticateToken,
-  upload.single("image"),
+  upload.single("wallpaperImage"),
   async (req, res) => {
     const db = req.app.locals.db;
+    const imagePath = req.file ? req.file.path : null;
 
-    // Destructuring the request body to get the necessary fields
     const {
       propertyTitle,
       price,
@@ -78,21 +72,14 @@ router.post(
       longitude,
     } = req.body;
 
-    // Destructure userId from the token payload
     const { userId } = req.payload;
 
-    // Get the image path from multer (if any)
-    const imagePath = req.file ? req.file.path : null;
-
-    // Check if required fields are provided
     if (!propertyTitle || !price || !propertyType || !description || !address || !street || !city || !state || !pinCode) {
       return res.status(400).json({ error: "All required fields must be provided." });
     }
 
-    // Generate a unique propertyId using uuidv4
     const propertyId = uuidv4();
 
-    // Array of parameters to be used in the query
     const params = [
       propertyId,
       propertyTitle,
@@ -104,18 +91,15 @@ router.post(
       city,
       state,
       pinCode,
-      latitude, // Ensure these match DB column names (mapLatitude, mapLongitude)
-      longitude, // Ensure these match DB column names (mapLatitude, mapLongitude)
+      latitude,
+      longitude,
       userId,
-      imagePath, // Ensure this matches DB column name (wallpaperImage)
+      imagePath, // Corrected to use imagePath
     ];
 
-    // Log the parameters for debugging
     console.log("Parameters for INSERT:", params);
 
     try {
-      // Insert into DB, including image path if available
-      // Make sure column names here exactly match your DB schema
       await db.run(
         `INSERT INTO properties (
           propertyId,
@@ -136,13 +120,32 @@ router.post(
         params
       );
 
-      // Respond with success message
       res.status(201).json({ message: "Property added successfully" });
     } catch (err) {
-      console.error("Database Insert Error:", err); // Log the specific error
+      console.error("Database Insert Error:", err);
       res.status(500).json({ error: "Internal Server Error" });
     }
   }
 );
+
+// Route to delete a property by owner
+router.delete("/properties/:propertyId", authenticateToken, async (req, res) => {
+  const db = req.app.locals.db;
+  const { propertyId } = req.params;
+  const { userId } = req.payload;
+
+  try {
+    const property = await db.get(`SELECT * FROM properties WHERE propertyId = ? AND ownerId = ?`, [propertyId, userId]);
+    if (!property) {
+      return res.status(404).json({ errorMsg: "Property not found or you are not the owner." });
+    }
+
+    await db.run(`DELETE FROM properties WHERE propertyId = ?`, [propertyId]);
+    res.status(200).json({ message: "Property deleted successfully" });
+  } catch (err) {
+    console.error("Error deleting property:", err);
+    res.status(500).json({ errorMsg: "Internal Server Error" });
+  }
+});
 
 module.exports = router;

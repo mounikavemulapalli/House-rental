@@ -7,7 +7,6 @@ import Cookies from "js-cookie";
 import "./MyProfile.css";
 
 const MyProfile = () => {
-  // Initialize state with default empty strings for controlled inputs
   const [userProfileInfo, setProfileInfo] = useState({
     username: "",
     email: "",
@@ -33,7 +32,6 @@ const MyProfile = () => {
         };
         const response = await fetch(url, options);
         const data = await response.json();
-        // Update state, ensuring values are strings or default to empty string
         setProfileInfo({
           username: data.username || "",
           email: data.email || "",
@@ -42,14 +40,45 @@ const MyProfile = () => {
       }
     } catch (error) {
       console.error(`Error fetching profile data: ${error.message}`);
-      // Optionally reset state on error
       setProfileInfo({ username: "", email: "", phoneNumber: "" });
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setProfileInfo((prevInfo) => ({
+      ...prevInfo,
+      [name]: value,
+    }));
+  };
+
+  const saveProfileData = async () => {
+    try {
+      const token = Cookies.get("jwt_token");
+      if (token) {
+        const url = "http://localhost:4000/update-profile";
+        const options = {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(userProfileInfo),
+        };
+        const response = await fetch(url, options);
+        if (response.ok) {
+          console.log("Profile updated successfully");
+        } else {
+          console.error("Failed to update profile");
+        }
+      }
+    } catch (error) {
+      console.error(`Error updating profile data: ${error.message}`);
     }
   };
 
   useEffect(() => {
     getProfileData();
-    // TODO: Replace placeholder stats with actual API call
     setStats({ properties: 5, chatReceived: 12, chatSent: 7 });
   }, []);
 
@@ -65,9 +94,10 @@ const MyProfile = () => {
             <label className='myprofile-label'>Name</label>
             <input
               type='text'
+              name='username'
               className='myprofile-input-box'
-              value={userProfileInfo.username} // Now starts controlled
-              readOnly
+              value={userProfileInfo.username}
+              onChange={handleInputChange}
             />
           </div>
 
@@ -75,9 +105,10 @@ const MyProfile = () => {
             <label className='myprofile-label'>Email</label>
             <input
               type='email'
+              name='email'
               className='myprofile-input-box'
-              value={userProfileInfo.email} // Now starts controlled
-              readOnly
+              value={userProfileInfo.email}
+              onChange={handleInputChange}
             />
           </div>
 
@@ -85,14 +116,15 @@ const MyProfile = () => {
             <label className='myprofile-label'>Phone Number</label>
             <input
               type='text'
+              name='phoneNumber'
               className='myprofile-input-box'
-              value={userProfileInfo.phoneNumber} // Now starts controlled
-              readOnly
+              value={userProfileInfo.phoneNumber}
+              onChange={handleInputChange}
             />
           </div>
 
           <center>
-            <button className='edit-profile-btn'>Save Profile</button>
+            <button className='edit-profile-btn' onClick={saveProfileData}>Save Profile</button>
           </center>
         </div>
 
