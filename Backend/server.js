@@ -15,7 +15,7 @@ const app = express();
 const server = http.createServer(app); // Create HTTP server from Express app
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000,https://house-rental-theta.vercel.app/", // Allow your frontend origin
+    origin: "https://house-rental-theta.vercel.app/", // Allow your frontend origin
     methods: ["GET", "POST"],
   },
 });
@@ -29,7 +29,7 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:3000,https://house-rental-theta.vercel.app/",
+    origin: "https://house-rental-theta.vercel.app/",
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
