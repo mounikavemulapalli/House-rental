@@ -50,8 +50,8 @@ const startServer = async () => {
   app.use("/", chatRoutes);
 
   // Serve images from the 'uploads' directory
-  // app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-  app.use("/uploads", express.static("uploads"));
+  app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+  // app.use("/uploads", express.static("uploads"));
 
   // Start the server using the http server instance
   server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
