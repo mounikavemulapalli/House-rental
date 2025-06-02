@@ -31,7 +31,7 @@ const PropertiesPage = () => {
   // Fetch properties based on filters
   const fetchProperties = async (searchType, query) => {
     const token = Cookies.get("jwt_token");
-    const url = `http://localhost:4000/properties?search_type=${searchType}&location=${query}&price=${price}`;
+    const url = `https://house-rental-oxbl.onrender.com/properties?search_type=${searchType}&location=${query}&price=${price}`;
 
     const headers = {
       "Content-Type": "application/json",
@@ -52,7 +52,7 @@ const PropertiesPage = () => {
   const handleFilterSubmit = async () => {
     const token = Cookies.get("jwt_token");
 
-    const url = `http://localhost:4000/properties`;
+    const url = `https://house-rental-oxbl.onrender.com/properties`;
     const body = {
       searchType,
       location,
@@ -78,7 +78,7 @@ const PropertiesPage = () => {
 
   const handleDelete = async (propertyId) => {
     const token = Cookies.get("jwt_token");
-    const url = `http://localhost:4000/properties/${propertyId}`;
+    const url = `https://house-rental-oxbl.onrender.com/properties/${propertyId}`;
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
@@ -86,9 +86,16 @@ const PropertiesPage = () => {
 
     try {
       await axios.delete(url, { headers });
-      setFilteredProperties(filteredProperties.filter(property => property.propertyId !== propertyId));
+      setFilteredProperties(
+        filteredProperties.filter(
+          (property) => property.propertyId !== propertyId
+        )
+      );
     } catch (error) {
-      console.error("Error deleting property:", error.response ? error.response.data : error.message);
+      console.error(
+        "Error deleting property:",
+        error.response ? error.response.data : error.message
+      );
     }
   };
 
@@ -141,9 +148,10 @@ const PropertiesPage = () => {
         <div className='propertiespage-listing'>
           {filteredProperties.length > 0 ? (
             filteredProperties.map((property) => {
-              const imageUrl = property.wallpaperImage && property.wallpaperImage !== "null" 
-                ? `http://localhost:4000/${property.wallpaperImage}` 
-                : image;
+              const imageUrl =
+                property.wallpaperImage && property.wallpaperImage !== "null"
+                  ? `https://house-rental-oxbl.onrender.com/${property.wallpaperImage}`
+                  : image;
               return (
                 <div
                   className='propertiespage-property-card'
@@ -195,7 +203,9 @@ const PropertiesPage = () => {
                     <button className='propertiespage-save-property'>
                       Save Property
                     </button>
-                    <button onClick={() => handleDelete(property.propertyId)}>Delete</button>
+                    <button onClick={() => handleDelete(property.propertyId)}>
+                      Delete
+                    </button>
                     <button>Send Message Request</button>
                   </div>
                 </div>

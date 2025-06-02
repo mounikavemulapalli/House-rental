@@ -55,7 +55,7 @@ const ViewDetails = (props) => {
         console.log(`Property ID: ${propertyId}`);
 
         if (token !== undefined) {
-          const url = `http://localhost:4000/property-details?propertyId=${propertyId}`;
+          const url = `https://house-rental-oxbl.onrender.com/property-details?propertyId=${propertyId}`;
 
           const headers = {
             "Content-Type": "application/json",

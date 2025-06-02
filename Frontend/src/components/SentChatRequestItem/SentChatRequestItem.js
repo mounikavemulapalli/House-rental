@@ -13,7 +13,7 @@
 
 //   const cancelRequest = async () => {
 //     const token = Cookies.get("jwt_token");
-//     const url = `http://localhost:4000/cancel-chat-request/${chatId}`;
+//     const url = `https://house-rental-oxbl.onrender.com/cancel-chat-request/${chatId}`;
 //     const headers = {
 //       Authorization: `Bearer ${token}`,
 //     };
@@ -72,7 +72,7 @@ const SentChatRequestItem = ({
 
     try {
       const response = await axios.delete(
-        `http://localhost:4000/cancel-chat-request/${chatId}`,
+        `https://house-rental-oxbl.onrender.com/cancel-chat-request/${chatId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

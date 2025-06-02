@@ -33,7 +33,7 @@ class LoginForm extends Component {
 
     localStorage.setItem("userId", userId);
 
-    /* const socket = io('http://localhost:4000', {
+    /* const socket = io('https://house-rental-oxbl.onrender.com', {
             path: '/socket.io',  // Same WebSocket path as server
             transports: ['websocket', 'polling'], // Include polling
         });
@@ -70,8 +70,8 @@ class LoginForm extends Component {
     const { username, password } = this.state;
     const userDetails = { username, password };
     this.setState({ showApiStatusText: true, apiStatusText: "verifying...." });
-    // const url = 'http://localhost:4000/login'
-    const url = "http://localhost:4000/login";
+    // const url = 'https://house-rental-oxbl.onrender.com/login'
+    const url = "https://house-rental-oxbl.onrender.com/login";
     const options = {
       method: "POST",
       headers: {

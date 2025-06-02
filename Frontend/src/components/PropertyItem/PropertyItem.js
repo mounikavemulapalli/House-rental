@@ -14,7 +14,7 @@
 //   const jwtToken = Cookies.get("jwt_token");
 
 //   const sendChatRequest = async () => {
-//     const url = "http://localhost:4000/chat-request";
+//     const url = "https://house-rental-oxbl.onrender.com/chat-request";
 //     const headers = {
 //       "Content-Type": "application/json",
 //       Authorization: `Bearer ${jwtToken}`,
@@ -35,7 +35,7 @@
 //   };
 
 //   const deleteProperty = async () => {
-//     const url = `http://localhost:4000/properties/${propertyId}`;
+//     const url = `https://house-rental-oxbl.onrender.com/properties/${propertyId}`;
 //     const headers = {
 //       "Content-Type": "application/json",
 //       Authorization: `Bearer ${jwtToken}`,
@@ -117,12 +117,12 @@ const PropertyCard = (props) => {
 
   // Define imageUrl correctly
   const imageUrl = wallpaperImage
-    ? `http://localhost:4000/${wallpaperImage}`
+    ? `https://house-rental-oxbl.onrender.com/${wallpaperImage}`
     : image;
   const jwtToken = Cookies.get("jwt_token");
 
   const sendChatRequest = async () => {
-    const url = "http://localhost:4000/chat-request";
+    const url = "https://house-rental-oxbl.onrender.com/chat-request";
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${jwtToken}`,
@@ -146,7 +146,7 @@ const PropertyCard = (props) => {
   };
 
   const deleteProperty = async () => {
-    const url = `http://localhost:4000/properties/${propertyId}`;
+    const url = `https://house-rental-oxbl.onrender.com/properties/${propertyId}`;
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${jwtToken}`,

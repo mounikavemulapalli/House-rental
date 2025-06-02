@@ -9,7 +9,7 @@ const router = express.Router();
 const handleSendMessage = async () => {
   if (messageContent.trim() !== "") {
     const token = Cookies.get("jwt_token");
-    const url = "http://localhost:4000/add-chat-message";
+    const url = "https://house-rental-oxbl.onrender.com/add-chat-message";
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
@@ -20,11 +20,13 @@ const handleSendMessage = async () => {
       await axios.post(url, body, { headers });
       setMessageContent("");
     } catch (error) {
-      console.error("Error sending message:", error.response ? error.response.data : error.message);
+      console.error(
+        "Error sending message:",
+        error.response ? error.response.data : error.message
+      );
     }
   }
 };
-
 
 router.post("/chat-request", authenticateToken, async (req, res) => {
   const db = req.app.locals.db;
@@ -210,7 +212,9 @@ router.post("/add-chat-message", authenticateToken, async (req, res) => {
     res.status(201).json({ message: "Message sent successfully" });
   } catch (err) {
     console.error("Error adding chat message:", err);
-    res.status(500).json({ errorMsg: "Internal Server Error", details: err.message });
+    res
+      .status(500)
+      .json({ errorMsg: "Internal Server Error", details: err.message });
   }
 });
 router.get("/get-chat-messages", authenticateToken, async (req, res) => {
@@ -255,56 +259,77 @@ router.delete(
     }
   }
 );
-router.put("/accept-chat-request/:chatId", authenticateToken, async (req, res) => {
-  const db = req.app.locals.db;
-  const { chatId } = req.params;
+router.put(
+  "/accept-chat-request/:chatId",
+  authenticateToken,
+  async (req, res) => {
+    const db = req.app.locals.db;
+    const { chatId } = req.params;
 
-  try {
-    await db.run(`UPDATE chats SET status = 'accepted' WHERE chatId = ?`, [chatId]);
+    try {
+      await db.run(`UPDATE chats SET status = 'accepted' WHERE chatId = ?`, [
+        chatId,
+      ]);
 
-    const { userId } = await db.get(`SELECT userId FROM chats WHERE chatId = ?`, [chatId]);
-    const senderSocketId = connectedClients[userId];
-    if (senderSocketId) {
-      req.io.to(senderSocketId).emit("chatAccepted", { chatId });
+      const { userId } = await db.get(
+        `SELECT userId FROM chats WHERE chatId = ?`,
+        [chatId]
+      );
+      const senderSocketId = connectedClients[userId];
+      if (senderSocketId) {
+        req.io.to(senderSocketId).emit("chatAccepted", { chatId });
+      }
+
+      res.status(200).json({ message: "Chat request accepted" });
+    } catch (err) {
+      res.status(500).json({ errorMsg: "Internal Server Error" });
     }
-
-    res.status(200).json({ message: "Chat request accepted" });
-  } catch (err) {
-    res.status(500).json({ errorMsg: "Internal Server Error" });
   }
-});
+);
 
-router.put("/reject-chat-request/:chatId", authenticateToken, async (req, res) => {
-  const db = req.app.locals.db;
-  const { chatId } = req.params;
+router.put(
+  "/reject-chat-request/:chatId",
+  authenticateToken,
+  async (req, res) => {
+    const db = req.app.locals.db;
+    const { chatId } = req.params;
 
-  try {
-    await db.run(`UPDATE chats SET status = 'rejected' WHERE chatId = ?`, [chatId]);
+    try {
+      await db.run(`UPDATE chats SET status = 'rejected' WHERE chatId = ?`, [
+        chatId,
+      ]);
 
-    res.status(200).json({ message: "Chat request rejected" });
-  } catch (err) {
-    res.status(500).json({ errorMsg: "Internal Server Error" });
+      res.status(200).json({ message: "Chat request rejected" });
+    } catch (err) {
+      res.status(500).json({ errorMsg: "Internal Server Error" });
+    }
   }
-});
+);
 // In your chat.js or equivalent backend route file
-router.delete("/delete-chat-request/:chatId", authenticateToken, async (req, res) => {
-  const db = req.app.locals.db;
-  const { chatId } = req.params;
+router.delete(
+  "/delete-chat-request/:chatId",
+  authenticateToken,
+  async (req, res) => {
+    const db = req.app.locals.db;
+    const { chatId } = req.params;
 
-  try {
-    const result = await db.run(`DELETE FROM chats WHERE chatId = ?`, [chatId]);
+    try {
+      const result = await db.run(`DELETE FROM chats WHERE chatId = ?`, [
+        chatId,
+      ]);
 
-    if (result.changes === 0) {
-      return res.status(404).json({ errorMsg: "Chat request not found" });
+      if (result.changes === 0) {
+        return res.status(404).json({ errorMsg: "Chat request not found" });
+      }
+
+      res.status(200).json({ message: "Chat request deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting chat request:", error);
+      res.status(500).json({
+        errorMsg: "Failed to delete chat request",
+        details: error.message,
+      });
     }
-
-    res.status(200).json({ message: "Chat request deleted successfully" });
-  } catch (error) {
-    console.error("Error deleting chat request:", error);
-    res.status(500).json({
-      errorMsg: "Failed to delete chat request",
-      details: error.message,
-    });
   }
-});
+);
 module.exports = router;

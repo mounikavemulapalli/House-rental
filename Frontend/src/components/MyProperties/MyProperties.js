@@ -1,3 +1,5 @@
+/** @format */
+
 import "./MyProperties.css";
 import ProfileSidebar from "../ProfileSidebar/ProfileSidebar";
 import PropertyCard from "../PropertyItem/PropertyItem";
@@ -12,7 +14,7 @@ const MyProperties = () => {
   useEffect(() => {
     const getProperties = async () => {
       const token = Cookies.get("jwt_token");
-      const url = "http://localhost:4000/properties/owner";
+      const url = "https://house-rental-oxbl.onrender.com/properties/owner";
       const headers = {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -30,10 +32,10 @@ const MyProperties = () => {
   }, []);
 
   return (
-    <div className="my-properties-page-container">
+    <div className='my-properties-page-container'>
       <ProfileSidebar />
-      <div className="my-properties-page-content-container">
-        <div className="my-contacts-header-buttons">
+      <div className='my-properties-page-content-container'>
+        <div className='my-contacts-header-buttons'>
           <button>All</button>
           <button>Rent</button>
           <button>Sale</button>
@@ -44,16 +46,16 @@ const MyProperties = () => {
           <button>Land/Plot</button>
         </div>
 
-        <div className="property-list">
-          <h2 className="properties-heading">Properties</h2>
-          <ul className="property-card-list">
+        <div className='property-list'>
+          <h2 className='properties-heading'>Properties</h2>
+          <ul className='property-card-list'>
             {propertiesArray.length === 0 ? (
-              <div className="properties-page">
+              <div className='properties-page'>
                 <center>
-                  <img src={image} alt="no properties" />
+                  <img src={image} alt='no properties' />
                   <h4>No Properties Posted</h4>
                   <p>Want to Post A Property Now?</p>
-                  <button className="myproperties-message-btn">
+                  <button className='myproperties-message-btn'>
                     &nbsp;Post Now
                   </button>
                 </center>

@@ -22,7 +22,7 @@ const MyProfile = () => {
     try {
       const token = Cookies.get("jwt_token");
       if (token) {
-        const url = "http://localhost:4000/user-profile";
+        const url = "https://house-rental-oxbl.onrender.com/user-profile";
         const options = {
           method: "GET",
           headers: {
@@ -56,7 +56,7 @@ const MyProfile = () => {
     try {
       const token = Cookies.get("jwt_token");
       if (token) {
-        const url = "http://localhost:4000/update-profile";
+        const url = "https://house-rental-oxbl.onrender.com/update-profile";
         const options = {
           method: "PUT",
           headers: {
@@ -124,7 +124,9 @@ const MyProfile = () => {
           </div>
 
           <center>
-            <button className='edit-profile-btn' onClick={saveProfileData}>Save Profile</button>
+            <button className='edit-profile-btn' onClick={saveProfileData}>
+              Save Profile
+            </button>
           </center>
         </div>
 

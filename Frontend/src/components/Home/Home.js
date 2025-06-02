@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useState, useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
 import Header from "../Header/Header";
@@ -7,7 +9,7 @@ import axios from "axios";
 import { io } from "socket.io-client";
 import "./Home.css";
 import Navbar from "../Navbar/Navbar.js";
-const socket = io("http://localhost:4000", {
+const socket = io("https://house-rental-oxbl.onrender.com", {
   path: "/socket.io", // Same WebSocket path as server
   transports: ["websocket", "polling"], // Include polling
 });
@@ -34,7 +36,7 @@ const Home = () => {
     const getProperties = async () => {
       try {
         const token = Cookies.get("jwt_token");
-        const url = "http://localhost:4000/properties"; // Or "/properties" if using proxy
+        const url = "https://house-rental-oxbl.onrender.com/properties"; // Or "/properties" if using proxy
 
         const headers = {
           "Content-Type": "application/json",
@@ -54,8 +56,6 @@ const Home = () => {
 
     getProperties();
 
-   
-    
     // Listen for new property events
     socket.on("newProperty", (newProperty) => {
       setPropertiesArray((prevProperties) => [...prevProperties, newProperty]);
@@ -101,20 +101,28 @@ const Home = () => {
     setSavedProperties((prevSaved) => [...prevSaved, propertyId]);
   };
 
-  const filteredProperties = savedProperties.length > 0
-    ? propertiesArray.filter(property => savedProperties.includes(property.propertyId))
-    : propertiesArray;
+  const filteredProperties =
+    savedProperties.length > 0
+      ? propertiesArray.filter((property) =>
+          savedProperties.includes(property.propertyId)
+        )
+      : propertiesArray;
 
   return (
     <>
       {token === undefined ? <Navbar /> : <Header />}
       <div className='title-container'>
         <p className='first-title'>
-          Your Dream <span style={{ color: "#800500", fontWeight: "bold" }}>Home Awaits</span> Here For You
+          Your Dream{" "}
+          <span style={{ color: "#800500", fontWeight: "bold" }}>
+            Home Awaits
+          </span>{" "}
+          Here For You
           <br />
           <span className='tagline'>Gruhalābhaṁ Bhavatu Śubhaṁ</span>
         </p>
-        {uploadedImage && <img src={uploadedImage} alt="Uploaded" />} {/* Display the uploaded image */}
+        {uploadedImage && <img src={uploadedImage} alt='Uploaded' />}{" "}
+        {/* Display the uploaded image */}
         <div className='search-container'>
           <div className='row-buttons'>
             <input

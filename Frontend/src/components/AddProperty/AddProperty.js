@@ -94,15 +94,23 @@ const AddPropertyPage = () => {
         // Optionally clear fields or set defaults if API fails
         setFormData((prev) => ({
           ...prev,
-          address: "", street: "", city: "", state: "", pinCode: "",
+          address: "",
+          street: "",
+          city: "",
+          state: "",
+          pinCode: "",
         }));
       }
     } catch (error) {
       console.error("Error fetching location details:", error);
-       // Optionally clear fields or set defaults on error
-       setFormData((prev) => ({
+      // Optionally clear fields or set defaults on error
+      setFormData((prev) => ({
         ...prev,
-        address: "", street: "", city: "", state: "", pinCode: "",
+        address: "",
+        street: "",
+        city: "",
+        state: "",
+        pinCode: "",
       }));
     }
   };
@@ -140,47 +148,49 @@ const AddPropertyPage = () => {
   };
 
   // Ensure the image URL is correctly set when displaying
-  const imageUrl = formData.image ? URL.createObjectURL(formData.image) : defaultImage;
-  
+  const imageUrl = formData.image
+    ? URL.createObjectURL(formData.image)
+    : defaultImage;
+
   // ✅ **Handle Form Submission**
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission
     try {
-      const apiUrl = "http://localhost:4000/add-properties";
+      const apiUrl = "https://house-rental-oxbl.onrender.com/add-properties";
       const token = Cookies.get("jwt_token"); // Get JWT token from cookies
-  
+
       if (!token) {
         alert("Authentication token is missing!");
         return;
       }
-  
+
       const headers = {
         "Content-Type": "multipart/form-data", // Use multipart/form-data for image upload
         Authorization: `Bearer ${token}`,
       };
-  
+
       const formDataToSend = new FormData();
-  
+
       // Map frontend state keys to backend expected keys
-      formDataToSend.append('propertyTitle', formData.title);
-      formDataToSend.append('price', formData.price);
-      formDataToSend.append('propertyType', formData.propertyType);
-      formDataToSend.append('description', formData.description);
-      formDataToSend.append('address', formData.address); // Use the address field from state
-      formDataToSend.append('street', formData.street);
-      formDataToSend.append('city', formData.city);
-      formDataToSend.append('state', formData.state);
-      formDataToSend.append('pinCode', formData.pinCode); // Ensure state uses pinCode
-      formDataToSend.append('latitude', formData.latitude ?? ''); // Send empty string if null
-      formDataToSend.append('longitude', formData.longitude ?? ''); // Send empty string if null
-  
+      formDataToSend.append("propertyTitle", formData.title);
+      formDataToSend.append("price", formData.price);
+      formDataToSend.append("propertyType", formData.propertyType);
+      formDataToSend.append("description", formData.description);
+      formDataToSend.append("address", formData.address); // Use the address field from state
+      formDataToSend.append("street", formData.street);
+      formDataToSend.append("city", formData.city);
+      formDataToSend.append("state", formData.state);
+      formDataToSend.append("pinCode", formData.pinCode); // Ensure state uses pinCode
+      formDataToSend.append("latitude", formData.latitude ?? ""); // Send empty string if null
+      formDataToSend.append("longitude", formData.longitude ?? ""); // Send empty string if null
+
       // Append image if it exists
       if (formData.image) {
-        formDataToSend.append('wallpaperImage', formData.image);
+        formDataToSend.append("wallpaperImage", formData.image);
       }
-  
+
       const response = await axios.post(apiUrl, formDataToSend, { headers });
-  
+
       if (response.status === 201) {
         alert("Property added successfully!");
       } else {
@@ -277,7 +287,6 @@ const AddPropertyPage = () => {
             />
           </div>
           <div className='form-group'>
-            
             <div className='form-group'>
               <label>Pin Code</label>
               <input
@@ -292,9 +301,13 @@ const AddPropertyPage = () => {
         </div>
         <div className='form-group'>
           <label>Upload Property Image</label>
-          <input type='file' name='wallpaperImage' onChange={handleImageUpload} />
+          <input
+            type='file'
+            name='wallpaperImage'
+            onChange={handleImageUpload}
+          />
         </div>
-        <img src={imageUrl} alt="Property" className="image-preview" />
+        <img src={imageUrl} alt='Property' className='image-preview' />
         <div className='map-section'>
           <h3>Select Property Location</h3>
           {formData.latitude !== null && formData.longitude !== null ? (

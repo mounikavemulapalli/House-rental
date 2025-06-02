@@ -23,7 +23,7 @@ class Header extends Component {
   //   try {
   //     const token = Cookies.get('jwt_token');
   //     if (token !== undefined) {
-  //       const url = 'http://localhost:4000/user-profile';
+  //       const url = 'https://house-rental-oxbl.onrender.com/user-profile';
   //       const options = {
   //         method: 'GET',
   //         headers: {
@@ -45,8 +45,8 @@ class Header extends Component {
       const token = Cookies.get("jwt_token");
       if (token !== undefined) {
         // const url =
-        //   "http://localhost:4000/user-profile";
-        const url = "http://localhost:4000/user-profile";
+        //   "https://house-rental-oxbl.onrender.com/user-profile";
+        const url = "https://house-rental-oxbl.onrender.com/user-profile";
         const options = {
           method: "GET",
           headers: {

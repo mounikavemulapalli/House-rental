@@ -40,7 +40,8 @@ const ChatRequests = () => {
   useEffect(() => {
     const getReceivedChatRequests = async () => {
       const token = Cookies.get("jwt_token");
-      const url = "http://localhost:4000/received-chat-requests";
+      const url =
+        "https://house-rental-oxbl.onrender.com/received-chat-requests";
       const headers = {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -54,7 +55,7 @@ const ChatRequests = () => {
 
     const getSentChatRequests = async () => {
       const token = Cookies.get("jwt_token");
-      const url = "http://localhost:4000/sent-chat-requests";
+      const url = "https://house-rental-oxbl.onrender.com/sent-chat-requests";
       const headers = {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -67,7 +68,7 @@ const ChatRequests = () => {
 
     getSentChatRequests();
 
-    const socket = io("http://localhost:4000", {
+    const socket = io("https://house-rental-oxbl.onrender.com", {
       path: "/socket.io", // Same WebSocket path as server
       transports: ["websocket", "polling"], // Include polling
     });
