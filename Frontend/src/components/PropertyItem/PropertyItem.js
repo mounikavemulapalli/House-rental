@@ -103,11 +103,22 @@ import { Link } from "react-router-dom";
 import image from "../../assets/images/no-properties.svg";
 
 const PropertyCard = (props) => {
-  const { propertyDetails, currentUserId } = props;
-  const { propertyId, propertyTitle, price, description, city, state, wallpaperImage, ownerId } = propertyDetails;
-  
+  const { propertyDetails, currentUserId, onSaveProperty } = props;
+  const {
+    propertyId,
+    propertyTitle,
+    price,
+    description,
+    city,
+    state,
+    wallpaperImage,
+    ownerId,
+  } = propertyDetails;
+
   // Define imageUrl correctly
-  const imageUrl = wallpaperImage ? `http://localhost:4000/${wallpaperImage}` : image;
+  const imageUrl = wallpaperImage
+    ? `http://localhost:4000/${wallpaperImage}`
+    : image;
   const jwtToken = Cookies.get("jwt_token");
 
   const sendChatRequest = async () => {
@@ -127,7 +138,10 @@ const PropertyCard = (props) => {
         alert("Chat request sent successfully");
       }
     } catch (error) {
-      console.error("Error sending chat request:", error.response ? error.response.data : error.message);
+      console.error(
+        "Error sending chat request:",
+        error.response ? error.response.data : error.message
+      );
     }
   };
 
@@ -145,7 +159,10 @@ const PropertyCard = (props) => {
         // Optionally refresh the list or remove the item from the UI
       }
     } catch (error) {
-      console.error("Error deleting property:", error.response ? error.response.data : error.message);
+      console.error(
+        "Error deleting property:",
+        error.response ? error.response.data : error.message
+      );
     }
   };
 
@@ -155,7 +172,7 @@ const PropertyCard = (props) => {
         <div className='PropertyItem-property-item'>
           <div className='PropertyItem-property-card'>
             <div className='PropertyItem-property-image-placeholder'>
-              <img src={imageUrl} alt='Property Image' />
+              <img src={imageUrl} alt='PropertyImage' />
             </div>
             <div className='PropertyItem-property-info'>
               <h3>{propertyTitle}</h3>
@@ -179,6 +196,12 @@ const PropertyCard = (props) => {
                     Delete Property
                   </button>
                 )}
+                <button
+                  type='button'
+                  onClick={() => onSaveProperty(propertyId)}
+                >
+                  Save Property
+                </button>
                 <Link to={`/view-details?propertyId=${propertyId}`}>
                   <button type='button'>View Details</button>
                 </Link>

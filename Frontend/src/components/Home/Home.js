@@ -22,6 +22,7 @@ socket.on("connect_error", (err) => {
 
 const Home = () => {
   const [propertiesArray, setPropertiesArray] = useState([]);
+  const [savedProperties, setSavedProperties] = useState([]); // New state for saved properties
   const [currentLocation, setCurrentLocation] = useState("Fetching...");
   const [searchType, setSearchType] = useState("rent");
   const [searchQuery, setSearchQuery] = useState("");
@@ -95,6 +96,14 @@ const Home = () => {
       setCurrentLocation("Geolocation is not supported by this browser.");
     }
   };
+
+  const handleSaveProperty = (propertyId) => {
+    setSavedProperties((prevSaved) => [...prevSaved, propertyId]);
+  };
+
+  const filteredProperties = savedProperties.length > 0
+    ? propertiesArray.filter(property => savedProperties.includes(property.propertyId))
+    : propertiesArray;
 
   return (
     <>
@@ -184,10 +193,11 @@ const Home = () => {
         <section className='featured'>
           <h2>Featured Properties</h2>
           <div className='property-grid'>
-            {propertiesArray.map((eachItem) => (
+            {filteredProperties.map((eachItem) => (
               <PropertyCard
                 key={eachItem.propertyId}
                 propertyDetails={eachItem}
+                onSaveProperty={handleSaveProperty} // Pass the save handler
               />
             ))}
           </div>

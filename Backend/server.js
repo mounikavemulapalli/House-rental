@@ -1,5 +1,5 @@
 /** @format */
-const fs = require('fs');
+const fs = require("fs");
 const express = require("express");
 const http = require("http");
 const cors = require("cors");
@@ -16,8 +16,8 @@ const server = http.createServer(app); // Create HTTP server from Express app
 const io = new Server(server, {
   cors: {
     origin: "http://localhost:3000", // Allow your frontend origin
-    methods: ["GET", "POST"]
-  }
+    methods: ["GET", "POST"],
+  },
 });
 
 setupSocket(io);
@@ -50,7 +50,8 @@ const startServer = async () => {
   app.use("/", chatRoutes);
 
   // Serve images from the 'uploads' directory
-  app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+  // app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+  app.use("/uploads", express.static("uploads"));
 
   // Start the server using the http server instance
   server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
