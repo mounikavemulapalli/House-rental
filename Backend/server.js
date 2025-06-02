@@ -10,12 +10,12 @@ const path = require("path");
 const authRoutes = require("./routes/auth");
 const propertiesRoutes = require("./routes/properties");
 const chatRoutes = require("./routes/chat");
-
+const allowedOrigins = ["https://house-rental-theta.vercel.app"];
 const app = express();
 const server = http.createServer(app); // Create HTTP server from Express app
 const io = new Server(server, {
   cors: {
-    origin: "https://house-rental-theta.vercel.app/", // Allow your frontend origin
+    origin: "https://house-rental-theta.vercel.app", // Allow your frontend origin
     methods: ["GET", "POST"],
   },
 });
@@ -27,13 +27,19 @@ app.use((req, res, next) => {
   next();
 });
 app.use(express.json());
-app.use(
-  cors({
-    origin: "https://house-rental-theta.vercel.app/",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
+app.use(cors({
+  origin: function(origin, callback) {
+    if (!origin) return callback(null, true);
+    const normalizedOrigin = origin.replace(/\/$/, ""); // remove trailing slash if any
+    if (allowedOrigins.includes(normalizedOrigin)) {
+      callback(null, true);
+    } else {
+      callback(new Error(`CORS policy: Origin ${origin} not allowed`));
+    }
+  },
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+}));
 app.options("*", cors());
 
 let db;
